@@ -1,11 +1,14 @@
 package com.clientui.controller;
 
 import com.clientui.beans.CommandeBean;
+import com.clientui.beans.ExpeditionBean;
 import com.clientui.beans.PaiementBean;
 import com.clientui.beans.ProductBean;
 import com.clientui.proxies.MicroserviceCommandeProxy;
+import com.clientui.proxies.MicroserviceExpeditionProxy;
 import com.clientui.proxies.MicroservicePaiementProxy;
 import com.clientui.proxies.MicroserviceProduitsProxy;
+import com.netflix.discovery.converters.Auto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +36,9 @@ public class ClientController {
 
     @Autowired
     private MicroservicePaiementProxy paiementProxy;
+
+    @Autowired
+    private MicroserviceExpeditionProxy expeditionProxy;
 
 
     Logger log = LoggerFactory.getLogger(this.getClass());
@@ -70,6 +76,16 @@ public class ClientController {
         model.addAttribute("produit", produit);
 
         return "FicheProduit";
+    }
+
+    @RequestMapping("/suivi/{id}")
+    public String suivi(@PathVariable int id, Model model){
+
+        ExpeditionBean expedition = expeditionProxy.getExpedition(id);
+
+        model.addAttribute("expedition", expedition);
+
+        return "Suivi";
     }
 
     /*
