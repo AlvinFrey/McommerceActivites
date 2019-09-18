@@ -81,7 +81,7 @@ public class ClientController {
     @RequestMapping("/suivi/{id}")
     public String suivi(@PathVariable int id, Model model){
 
-        ExpeditionBean expedition = expeditionProxy.getExpedition(id);
+        ExpeditionBean expedition = expeditionProxy.etatExpedition(id);
 
         model.addAttribute("expedition", expedition);
 
